@@ -28,7 +28,8 @@ class ServerCallbackI(Murmur.ServerCallback):
         )
         
     def userConnected(self, user, current=None):
-
+        print(user)
+        
         # Access to: user.session, user.name
 
         # If they're an admin...
@@ -136,6 +137,8 @@ class MumbleInterface(object):
         
         # Bind to known servers
         for server in self.meta.getBootedServers():
+            print(server)
+
             server_callback = Murmur.ServerCallbackPrx.uncheckedCast(
                 adapter.addWithUUID(
                     ServerCallbackI(server, adapter)
