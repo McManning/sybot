@@ -4,10 +4,10 @@ class Config(object):
     PORT = 5000
     CACHE_FOLDER = 'cache'
 
-class ProductionConfig(Config):
+class Production(Config):
     pass
     
-class DevelopmentConfig(Config):
+class Development(Config):
     DEBUG = True
 
     # Note: The ICE server has been firewalled to only allow 
