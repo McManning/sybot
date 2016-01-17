@@ -3,8 +3,6 @@ import re
 import Ice
 import Murmur
 
-from sybot import app
-
 class MetaCallbackI(Murmur.MetaCallback):
     """ Callback interface to be notified when a 
         server is started or stopped.
@@ -147,7 +145,11 @@ class MumbleInterface(object):
 
     ice = None
 
-    def __init__(self):
+    def __init__(self, config):
+        self.ice_secret = config['ICE_SECRET']
+        self.ice_client = config['ICE_CLIENT']
+        self.ice_proxy = config['ICE_PROXY']
+
         print('Starting MumbleInterface')
 
         prop = Ice.createProperties([])
@@ -159,7 +161,7 @@ class MumbleInterface(object):
         idd.properties = prop
 
         self.ice = Ice.initialize(idd)
-        self.ice.getImplicitContext().put("secret", app.config['ICE_SECRET'])
+        self.ice.getImplicitContext().put("secret", self.ice_secret)
     
         self.text_rules = []
 
@@ -167,12 +169,12 @@ class MumbleInterface(object):
         print('Connecting to Mumble Ice')
 
         self.meta = Murmur.MetaPrx.checkedCast(
-            self.ice.stringToProxy(app.config['ICE_PROXY'])
+            self.ice.stringToProxy(self.ice_proxy)
         )
 
         adapter = self.ice.createObjectAdapterWithEndpoints(
             "Callback.Client", 
-            app.config['ICE_CLIENT']
+            self.ice_client
         )
 
         self.meta_callback = Murmur.MetaCallbackPrx.uncheckedCast(
