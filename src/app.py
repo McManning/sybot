@@ -38,4 +38,8 @@ from sybot import app, mumble
 
 if __name__ == '__main__':
     mumble.connect()
-    app.run(use_reloader=False)
+    app.run(
+        use_reloader=False, 
+        host=app.config['HOST'], 
+        port=app.config['PORT']
+    )

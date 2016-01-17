@@ -2,10 +2,10 @@
 class Config(object):
     DEBUG = False
 
-    # Specify the server name that accepts connections.
-    # Connections not from this particular server name
-    # will be 404'd in the router
-    SERVER_NAME = 'sybolt.com:5006'
+    # Flask SERVER_NAME is garbage for our setup,
+    # so we manually do some other things 
+    HOST = '0.0.0.0'
+    PORT = 5006
     CACHE_FOLDER = 'cache'
 
 class Production(Config):
@@ -15,7 +15,8 @@ class Development(Config):
     DEBUG = True
     TRAP_HTTP_EXCEPTIONS = True
     TRAP_BAD_REQUEST_ERRORS = True
-    SERVER_NAME = 'sybolt.com:5007'
+    HOST = '0.0.0.0'
+    PORT = 5007
 
     # Note: The ICE server has been firewalled to only allow 
     # local connections. Development builds can only occur on
