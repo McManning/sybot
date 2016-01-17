@@ -18,7 +18,7 @@ app.config.from_object('config.' + os.environ['SYBOT_ENV'])
 app.register_blueprint(mumble_blueprint)
 
 # Setup instance of a Mumble Ice interface
-#mumble = MumbleInterface(app.config)
+mumble = MumbleInterface(app.config)
 
 @app.route('/', methods=['GET'])
 def index():
